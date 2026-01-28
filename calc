@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="pt-PT">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculadora de Orçamento de Tecido</title>
+    <!-- Tailwind CSS para estilização moderna -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Inter', sans-serif; }
+        input::-webkit-outer-spin-button,
+        input::-webkit-inner-spin-button { -webkit-appearance: none; margin: 0; }
+        @media print {
+            .no-print { display: none; }
+            .print-shadow { shadow: none; border: 1px solid #e2e8f0; }
+        }
+    </style>
+</head>
+<body class="bg-slate-50 text-slate-900 min-h-screen p-4 md:p-8">
+
+    <div class="max-w-5xl mx-auto">
+        <!-- Cabeçalho -->
+        <header class="mb-8 text-center md:text-left no-print">
+            <h1 class="text-3xl font-bold text-indigo-900 flex items-center justify-center md:justify-start gap-2">
+                <svg xmlns="http://www.w3.org/2000/svg" class="w-8 h-8 text-indigo-600" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="16" height="20" x="4" y="2" rx="2"/><line x1="8" x2="16" y1="6" y2="6"/><line x1="8" x2="16" y1="10" y2="10"/><line x1="8" x2="16" y1="14" y2="14"/><line x1="8" x2="16" y1="18" y2="18"/></svg>
+                Calculadora de Orçamento de Tecido
+            </h1>
+            <p class="text-slate-500 mt-2">Converta dimensões em orçamentos precisos instantaneamente.</p>
+        </header>
+
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
+            
+            <!-- Coluna de Inputs -->
+            <div class="lg:col-span-7 space-y-6 no-print">
+                
+                <!-- Dimensões do Ambiente -->
+                <section class="bg-white p-6 rounded-2xl shadow-sm border border-slate-100">
+                    <div class="flex items-center gap-2 mb-4 text-indigo-700 font-semibold">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m10 5 2 2 2-2"/><path d="m10 19 2-2 2 2"/><path d="M12 7v10"/><path d="M5 10 7 12 5 14"/><path d="m19 10-2 2 2 2"/><path d="M7 12h10"/></svg>
+                        <h2>Dimensões do Ambiente</h2>
+                    </div>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div class="flex flex-col gap-1.5">
+                            <label class="text-sm font-medium text-slate-600">Largura a cobrir (m)</label>
+                            <input type="number" id="larguraAmbiente" step="0.01" class="w-full bg-slate-50 border border-slate-200 rounded-xl py-3 px-4 focus:ring-2 focus:ring-indigo-500 outline-none" placeholder="0.00">
+                        </div>
+                        <div class="flex flex-col gap-1.5">
+                            <label class="text-sm font-medium text-slate-600">Altura (m)</label>
+                            <input type="number" id="alturaAmbiente" step="0.01" class="w-full bg-slate-50 border border-slate-200 rounded-xl py-3 px-4 focus:ring-2 focus:ring-indigo-500 outline-none" placeholder="0.00">
+                        </div>
+                    </div>
+                    <div class="mt-4 p-3 bg-indigo-50 rounded-lg flex justify-between items-center">
+                        <span class="text-sm text-indigo-700 font-medium">Área Total Calculada:</span>
+                        <span id="displayAreaTotal" class="font-bold text-indigo-900">0.00 m²</span>
+                    </div>
+                </section>
+
+                <!-- Especificações do Tecido -->
+                <section class="bg-white p-6 rounded-2xl shadow-sm border border-slate-100">
+                    <div class="flex items-center gap-2 mb-4 text-emerald-700 font-semibold">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="6" cy="6" r="3"/><path d="M8.12 8.12 12 12"/><circle cx="6" cy="18" r="3"/><path d="M14.8 14.8 20 20"/><path d="M8.12 15.88 12 12"/><path d="M14.8 9.2 20 4"/><circle cx="18" cy="6" r="3"/><circle cx="18" cy="18" r="3"/></svg>
+                        <h2>Especificações do Tecido</h2>
+                    </div>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div class="flex flex-col gap-1.5">
+                            <label class="text-sm font-medium text-slate-600">Largura do Tecido (m)</label>
+                            <input type="number" id="larguraTecido" step="0.01" class="w-full bg-slate-50 border border-slate-200 rounded-xl py-3 px-4 focus:ring-2 focus:ring-emerald-500 outline-none" placeholder="0.00">
+                        </div>
+                        <div class="flex flex-col gap-1.5">
+                            <label class="text-sm font-medium text-slate-600">Rapport / Folga (m)</label>
+                            <input type="number" id="rapport" step="0.01" class="w-full bg-slate-50 border border-slate-200 rounded-xl py-3 px-4 focus:ring-2 focus:ring-emerald-500 outline-none" placeholder="0.00">
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Valores Unitários -->
+                <section class="bg-white p-6 rounded-2xl shadow-sm border border-slate-100">
+                    <div class="flex items-center gap-2 mb-4 text-amber-700 font-semibold">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" x2="12" y1="2" y2="22"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
+                        <h2>Valores Unitários & Custos</h2>
+                    </div>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div class="flex flex-col gap-1.5">
+                            <label class="text-sm font-medium text-slate-600">Mão de Obra (R$/m²)</label>
+                            <input type="number" id="maoDeObra" step="0.01" class="w-full bg-slate-50 border border-slate-200 rounded-xl py-3 px-4 focus:ring-2 focus:ring-amber-500 outline-none" placeholder="0.00">
+                        </div>
+                        <div class="flex flex-col gap-1.5">
+                            <label class="text-sm font-medium text-slate-600">Tecido (R$/m linear)</label>
+                            <input type="number" id="precoTecido" step="0.01" class="w-full bg-slate-50 border border-slate-200 rounded-xl py-3 px-4 focus:ring-2 focus:ring-amber-500 outline-none" placeholder="0.00">
+                        </div>
+                        <div class="flex flex-col gap-1.5">
+                            <label class="text-sm font-medium text-slate-600">Frete (R$)</label>
+                            <input type="number" id="frete" step="0.01" class="w-full bg-slate-50 border border-slate-200 rounded-xl py-3 px-4 focus:ring-2 focus:ring-amber-500 outline-none" placeholder="0.00">
+                        </div>
+                        <div class="flex flex-col gap-1.5">
+                            <label class="text-sm font-medium text-slate-600">Margem de Erro (%)</label>
+                            <input type="number" id="margemErro" value="3" step="0.1" class="w-full bg-slate-50 border border-slate-200 rounded-xl py-3 px-4 focus:ring-2 focus:ring-amber-500 outline-none" placeholder="3">
+                        </div>
+                    </div>
+                </section>
+            </div>
+
+            <!-- Coluna de Resultados -->
+            <div class="lg:col-span-5 space-y-6">
+                
+                <!-- Cálculos Técnicos -->
+                <div class="bg-white p-6 rounded-2xl shadow-md border border-slate-100 relative overflow-hidden print-shadow">
+                    <h3 class="text-lg font-bold text-slate-800 mb-4 flex items-center gap-2">
+                        Resumo Técnico
+                    </h3>
+                    
+                    <div class="space-y-3">
+                        <div class="flex justify-between items-center py-2 border-b border-slate-50">
+                            <span class="text-slate-500 text-sm">Nº de Faixas</span>
+                            <span id="displayFaixas" class="font-bold text-slate-800">0 unid.</span>
+                        </div>
+                        <div class="flex justify-between items-center py-2 border-b border-slate-50">
+                            <span class="text-slate-500 text-sm">Altura Ajustada</span>
+                            <span id="displayAlturaAjustada" class="font-bold text-slate-800">0.00 m</span>
+                        </div>
+                        <div class="flex justify-between items-center py-2">
+                            <span class="text-slate-500 text-sm">Total Tecido (Comp.)</span>
+                            <span id="displayTotalTecido" class="font-bold text-indigo-600 text-lg">0.00 m</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Orçamento Detalhado -->
+                <div class="bg-indigo-900 text-white p-6 rounded-3xl shadow-xl print-shadow">
+                    <h3 class="text-xl font-semibold mb-6 flex items-center gap-2 border-b border-indigo-800 pb-4">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" x2="12" y1="2" y2="22"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
+                        Orçamento Final
+                    </h3>
+
+                    <div class="space-y-4">
+                        <div class="flex justify-between items-center text-indigo-200">
+                            <span>Mão de Obra</span>
+                            <span id="displaySubMO" class="font-medium text-white">R$ 0,00</span>
+                        </div>
+                        <div class="flex justify-between items-center text-indigo-200">
+                            <span>Tecido</span>
+                            <span id="displaySubTecido" class="font-medium text-white">R$ 0,00</span>
+                        </div>
+                        <div class="flex justify-between items-center text-indigo-200">
+                            <span>Frete</span>
+                            <span id="displaySubFrete" class="font-medium text-white">R$ 0,00</span>
+                        </div>
+                        
+                        <div class="pt-4 mt-2 border-t border-indigo-800">
+                            <div class="flex justify-between items-center mb-1">
+                                <span class="text-indigo-300 text-sm">Subtotal Líquido</span>
+                                <span id="displaySubtotalGeral" class="text-indigo-100 font-semibold">R$ 0,00</span>
+                            </div>
+                            <div class="flex flex-col mt-4">
+                                <span class="text-indigo-300 text-xs uppercase tracking-wider mb-1">Valor Total (+<span id="displayMargemTxt">3</span>%)</span>
+                                <span id="displayValorFinal" class="text-3xl font-bold tracking-tight">R$ 0,00</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <button onclick="window.print()" class="w-full mt-8 bg-white text-indigo-900 font-bold py-4 rounded-xl hover:bg-indigo-50 transition-colors flex items-center justify-center gap-2 no-print">
+                        Gerar PDF / Imprimir
+                    </button>
+                </div>
+
+                <div class="bg-amber-50 border border-amber-200 p-4 rounded-xl flex gap-3 text-amber-800 text-sm no-print">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" x2="12" y1="8" y2="12"/><line x1="12" x2="12.01" y1="16" y2="16"/></svg>
+                    <p>
+                        <strong>Atenção:</strong> O número de faixas é arredondado para cima para garantir a cobertura total do ambiente.
+                    </p>
+                </div>
+            </div>
+
+        </div>
+
+        <footer class="mt-12 pt-8 border-t border-slate-200 text-center text-slate-400 text-sm no-print">
+            Calculadora Profissional de Tecidos &bull; <span id="currentYear"></span>
+        </footer>
+    </div>
+
+    <script>
+        // Elementos do DOM
+        const inputs = [
+            'larguraAmbiente', 'alturaAmbiente', 'larguraTecido', 
+            'rapport', 'maoDeObra', 'precoTecido', 'frete', 'margemErro'
+        ];
+
+        const display = {
+            areaTotal: document.getElementById('displayAreaTotal'),
+            faixas: document.getElementById('displayFaixas'),
+            alturaAjustada: document.getElementById('displayAlturaAjustada'),
+            totalTecido: document.getElementById('displayTotalTecido'),
+            subMO: document.getElementById('displaySubMO'),
+            subTecido: document.getElementById('displaySubTecido'),
+            subFrete: document.getElementById('displaySubFrete'),
+            subtotalGeral: document.getElementById('displaySubtotalGeral'),
+            valorFinal: document.getElementById('displayValorFinal'),
+            margemTxt: document.getElementById('displayMargemTxt')
+        };
+
+        function formatCurrency(val) {
+            return new Intl.NumberFormat('pt-BR', {
+                style: 'currency',
+                currency: 'BRL'
+            }).format(val);
+        }
+
+        function calcular() {
+            // Obter valores
+            const data = {};
+            inputs.forEach(id => {
+                data[id] = parseFloat(document.getElementById(id).value) || 0;
+            });
+
+            // Cálculos
+            const areaTotal = data.larguraAmbiente * data.alturaAmbiente;
+            const faixas = data.larguraTecido > 0 ? Math.ceil(data.larguraAmbiente / data.larguraTecido) : 0;
+            const alturaAjustada = data.alturaAmbiente + data.rapport;
+            const totalTecidoMetro = faixas * alturaAjustada;
+
+            const subtotalMO = areaTotal * data.maoDeObra;
+            const subtotalTecido = totalTecidoMetro * data.precoTecido;
+            const subtotalGeral = subtotalMO + subtotalTecido + data.frete;
+            const valorFinal = subtotalGeral * (1 + data.margemErro / 100);
+
+            // Atualizar UI
+            display.areaTotal.innerText = areaTotal.toFixed(2) + ' m²';
+            display.faixas.innerText = faixas + ' unid.';
+            display.alturaAjustada.innerText = alturaAjustada.toFixed(2) + ' m';
+            display.totalTecido.innerText = totalTecidoMetro.toFixed(2) + ' m';
+            
+            display.subMO.innerText = formatCurrency(subtotalMO);
+            display.subTecido.innerText = formatCurrency(subtotalTecido);
+            display.subFrete.innerText = formatCurrency(data.frete);
+            display.subtotalGeral.innerText = formatCurrency(subtotalGeral);
+            display.valorFinal.innerText = formatCurrency(valorFinal);
+            display.margemTxt.innerText = data.margemErro;
+        }
+
+        // Listeners
+        inputs.forEach(id => {
+            document.getElementById(id).addEventListener('input', calcular);
+        });
+
+        // Ano no footer
+        document.getElementById('currentYear').innerText = new Date().getFullYear();
+
+        // Inicializar
+        calcular();
+    </script>
+</body>
+</html>
